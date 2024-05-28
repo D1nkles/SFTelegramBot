@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using SFTelegramBot.Controllers;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -11,9 +12,21 @@ namespace SFTelegramBot
     {
         ITelegramBotClient _telegramClient;
 
-        public Bot(ITelegramBotClient telegramClient) 
+        private InlineKeyboardController _inlineKeyboardController;
+        private TextMessageController _textMessageController;
+        private VoiceMessageController _voiceMessageController;
+        private DefaultMessageController _defaultMessageController;
+
+        public Bot(ITelegramBotClient telegramClient, InlineKeyboardController inlineKeyboardController,
+            TextMessageController textMessageController, VoiceMessageController voiceMessageController,
+            DefaultMessageController defaultMessageController) 
         {
             _telegramClient = telegramClient;
+
+            _inlineKeyboardController = inlineKeyboardController;
+            _textMessageController = textMessageController;
+            _voiceMessageController = voiceMessageController;
+            _defaultMessageController = defaultMessageController;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken) 
@@ -31,17 +44,24 @@ namespace SFTelegramBot
         {
             if (update.Type == UpdateType.CallbackQuery) 
             {
-                await _telegramClient.SendTextMessageAsync(update.Message.Chat.Id, "Вы нажали кнопку", 
-                    cancellationToken: cancellationToken);
+                await _inlineKeyboardController.Handle(update.CallbackQuery, cancellationToken);
                 return;
             }
 
             if (update.Type == UpdateType.Message) 
             {
-                Console.WriteLine($"Отправлено сообщение: {update.Message.Text}");
-                await _telegramClient.SendTextMessageAsync(update.Message.Chat.Id, $"Вы отправили сообщение: {update.Message.Text}", 
-                    cancellationToken: cancellationToken);
-                return;
+                switch (update.Message.Type) 
+                {
+                    case MessageType.Voice:
+                        await _voiceMessageController.Handle(update.Message, cancellationToken); 
+                        return;
+                    case MessageType.Text:
+                        await _textMessageController.Handle(update.Message, cancellationToken);
+                        return;
+                    default:
+                        await _defaultMessageController.Handle(update.Message, cancellationToken);
+                        return;
+                }
             }
         }
 
