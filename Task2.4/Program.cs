@@ -3,11 +3,11 @@ using Microsoft.Extensions.Hosting;
 using System.Text;
 using Telegram.Bot;
 
-namespace SFTelegramBot
+namespace Task2._4
 {
     class Program
     {
-        static void ConfigureServices(IServiceCollection services) 
+        static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ITelegramBotClient>(provider => new TelegramBotClient("7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA"));
 
