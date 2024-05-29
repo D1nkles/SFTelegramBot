@@ -5,7 +5,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace SFTelegramBot.Controllers
 {
-    internal class InlineKeyboardController
+    public class InlineKeyboardController
     {
         private readonly ITelegramBotClient _telegramClient;
         private readonly IStorage _memoryStorage;

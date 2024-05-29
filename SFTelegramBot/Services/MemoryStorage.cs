@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace SFTelegramBot.Services
 {
-    internal class MemoryStorage : IStorage
+    public class MemoryStorage : IStorage
     {
         private readonly ConcurrentDictionary<long, Session> _sessions;
 

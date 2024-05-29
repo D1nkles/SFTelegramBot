@@ -29,7 +29,10 @@ namespace SFTelegramBot
         {
             return new AppSettings()
             {
-                BotToken = "7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA"
+                BotToken = "7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA",
+                DownloadsFolder = "C:\\Users\\Dinkles\\Downloads",
+                AudioFileName = "audio",
+                InputAudioFormat = "ogg"
             };
         }
 

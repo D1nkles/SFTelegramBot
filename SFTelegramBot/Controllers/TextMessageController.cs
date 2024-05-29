@@ -5,7 +5,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace SFTelegramBot.Controllers
 {
-    internal class TextMessageController
+    public class TextMessageController
     {
         private readonly ITelegramBotClient _telegramClient;
 
