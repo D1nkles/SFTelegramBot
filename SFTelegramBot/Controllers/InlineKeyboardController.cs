@@ -1,4 +1,5 @@
-﻿using SFTelegramBot.Services;
+﻿using SFTelegramBot.Configuration;
+using SFTelegramBot.Services;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -9,6 +10,7 @@ namespace SFTelegramBot.Controllers
     {
         private readonly ITelegramBotClient _telegramClient;
         private readonly IStorage _memoryStorage;
+
         public InlineKeyboardController(ITelegramBotClient telegramBotClient, IStorage memoryStorage)
         {
             _telegramClient = telegramBotClient;
@@ -28,7 +30,7 @@ namespace SFTelegramBot.Controllers
                 "en" => "🇬🇧 Английский",
                 _ => string.Empty
             };
-
+            
             await _telegramClient.SendTextMessageAsync(callbackQuery.From.Id,
                 $"<b>Язык аудио - {languageText}.</b>{Environment.NewLine}" +
                 $"{Environment.NewLine}Можно изменить в главном меню.", cancellationToken: ct, parseMode: ParseMode.Html);

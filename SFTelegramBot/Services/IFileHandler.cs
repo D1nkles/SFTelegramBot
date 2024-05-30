@@ -1,8 +1,8 @@
 ﻿namespace SFTelegramBot.Services
 {
-    public interface IFileHandler
+    internal interface IFileHandler
     {
         Task Download(string fileId, CancellationToken ct);
-        string Process(string param);
+        string Process(string languageCode);
     }
 }

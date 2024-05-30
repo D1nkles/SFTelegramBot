@@ -1,6 +1,6 @@
 ﻿namespace SFTelegramBot.Configuration
 {
-    public class AppSettings
+    internal class AppSettings
     {
         public string BotToken { get; set; }
 
@@ -10,5 +10,6 @@
 
         public string InputAudioFormat { get; set; }
 
+        public string OutputAudioFormat { get; set; }
     }
 }
