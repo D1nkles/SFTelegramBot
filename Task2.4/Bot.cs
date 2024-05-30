@@ -9,16 +9,23 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
+using FinalTask.Controllers;
+using FinalTask.Services;
 
-namespace Task2._4
+namespace FinalTask
 {
     class Bot : BackgroundService
     {
         ITelegramBotClient _telegramClient;
+        private InlineKeyboardController _keyboardController;
+        private TextMessageController _textMessageController;
 
-        public Bot(ITelegramBotClient telegramClient)
+        public Bot(ITelegramBotClient telegramClient, TextMessageController textMessageController, 
+                   InlineKeyboardController inlineKeyboardController)
         {
             _telegramClient = telegramClient;
+            _textMessageController = textMessageController;
+            _keyboardController = inlineKeyboardController;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,26 +43,21 @@ namespace Task2._4
         {
             if (update.Type == UpdateType.Message)
             {
-                switch (update.Message.Type) 
+                switch (update.Message.Type)
                 {
                     case MessageType.Text:
-                        await _telegramClient.SendTextMessageAsync(update.Message.Chat.Id,
-                        $"Длина сообщения: {update.Message.Text.Length} знаков", cancellationToken: cancellationToken);
+                        await _textMessageController.Handle(update.Message, cancellationToken);
                         return;
                     default:
                         await _telegramClient.SendTextMessageAsync(update.Message.Chat.Id,
                             $"Вы отправили сообщение неверного типа!", cancellationToken: cancellationToken);
                         return;
                 }
-                
             }
 
-            if (update.Type == UpdateType.Message)
+            if (update.Type == UpdateType.CallbackQuery) 
             {
-                Console.WriteLine($"Отправлено сообщение: {update.Message.Text}");
-                await _telegramClient.SendTextMessageAsync(update.Message.Chat.Id, $"Вы отправили сообщение: {update.Message.Text}",
-                    cancellationToken: cancellationToken);
-                return;
+                await _keyboardController.Handle(update.CallbackQuery, cancellationToken);
             }
         }
 

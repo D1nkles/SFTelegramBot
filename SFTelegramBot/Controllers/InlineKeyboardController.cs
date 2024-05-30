@@ -28,6 +28,7 @@ namespace SFTelegramBot.Controllers
             {
                 "ru" => "🇷🇺 Русский",
                 "en" => "🇬🇧 Английский",
+                "ja" => "🇯🇵 Японский",
                 _ => string.Empty
             };
             

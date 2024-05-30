@@ -24,7 +24,8 @@ namespace SFTelegramBot.Controllers
                     buttons.Add(new[]
                     {
                         InlineKeyboardButton.WithCallbackData($"🇷🇺 Русский", $"ru"),
-                        InlineKeyboardButton.WithCallbackData($"🇬🇧 English", $"en")
+                        InlineKeyboardButton.WithCallbackData($"🇬🇧 English", $"en"),
+                        InlineKeyboardButton.WithCallbackData($"🇯🇵 Japanese", $"ja")
                     });
 
                     await _telegramClient.SendTextMessageAsync(message.Chat.Id, $"<b>  Наш бот превращает аудио в текст.</b> {Environment.NewLine}" +
