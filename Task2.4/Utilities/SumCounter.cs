@@ -14,6 +14,7 @@ namespace FinalTask.Utilities
             string text = message.Text;
             string number = "";
             long counter = 0;
+            long sum = 0;
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -24,12 +25,16 @@ namespace FinalTask.Utilities
 
                 else 
                 {
-                    counter += long.Parse(number);
+                    long.TryParse(number, out counter);
+                    sum += counter;
                     number = "";
                 }
             }
-            counter += long.Parse(number);
-            return counter;
+
+            long.TryParse(number, out counter);
+            sum += counter;
+
+            return sum;
         }
     }
 }
