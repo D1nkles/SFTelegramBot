@@ -13,6 +13,9 @@ namespace SFTelegramBot
         static void ConfigureServices(IServiceCollection services) 
         {
             AppSettings appSettings = BuildAppSettings();
+            services.AddSingleton(appSettings);
+
+            services.AddSingleton<IFileHandler, AudioFileHandler>();
 
             services.AddTransient<DefaultMessageController>();
             services.AddTransient<VoiceMessageController>();
@@ -29,10 +32,11 @@ namespace SFTelegramBot
         {
             return new AppSettings()
             {
-                BotToken = "7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA",
                 DownloadsFolder = "C:\\Users\\Dinkles\\Downloads",
+                BotToken = "7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA",
                 AudioFileName = "audio",
-                InputAudioFormat = "ogg"
+                InputAudioFormat = "ogg",
+                OutputAudioFormat = "wav"
             };
         }
 
