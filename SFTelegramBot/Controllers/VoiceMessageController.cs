@@ -5,7 +5,7 @@ using Telegram.Bot.Types;
 
 namespace SFTelegramBot.Controllers
 {
-    public class VoiceMessageController
+    internal class VoiceMessageController
     {
         private readonly IStorage _memoryStorage;
         private readonly ITelegramBotClient _telegramClient;
@@ -26,10 +26,9 @@ namespace SFTelegramBot.Controllers
 
             await _audioFileHandler.Download(fileId, ct);
 
-            await _telegramClient.SendTextMessageAsync(message.Chat.Id, "Голосовое сообщение загружено", cancellationToken: ct);
-
-            string LanguageCode = _memoryStorage.GetSession(message.Chat.Id).LanguageCode;
-            _audioFileHandler.Process(LanguageCode);
+            string userLanguageCode = _memoryStorage.GetSession(message.Chat.Id).LanguageCode;
+            var result = _audioFileHandler.Process(userLanguageCode);
+            await _telegramClient.SendTextMessageAsync(message.Chat.Id, result, cancellationToken: ct); 
         }
     }
 }

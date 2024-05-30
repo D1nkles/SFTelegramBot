@@ -10,6 +10,8 @@
 
         public string InputAudioFormat { get; set; }
 
+        public float InputAudioBitRate {  get; set; }
+
         public string OutputAudioFormat { get; set; }
     }
 }

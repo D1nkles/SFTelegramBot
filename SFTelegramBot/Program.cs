@@ -36,6 +36,7 @@ namespace SFTelegramBot
                 BotToken = "7455469646:AAGgh25oMYcY7U4lZ5AhY9M2ocP5Q2v_9ZA",
                 AudioFileName = "audio",
                 InputAudioFormat = "ogg",
+                InputAudioBitRate = 48000,
                 OutputAudioFormat = "wav"
             };
         }

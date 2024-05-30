@@ -1,11 +1,11 @@
 ﻿using SFTelegramBot.Configuration;
+using SFTelegramBot.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using SFTelegramBot.Utilities;
 
 namespace SFTelegramBot.Services
 {
@@ -46,7 +46,10 @@ namespace SFTelegramBot.Services
             AudioConverter.TryConvert(inputAudioPath, outputAudioPath);
             Console.WriteLine("Файл конвертирован");
 
-            return "Конвертация успешно завершена";
+            Console.WriteLine("Начинаем распознавание...");
+            var speechText = SpeechDetector.DetectSpeech(outputAudioPath, _appSettings.InputAudioBitRate, languageCode);
+            Console.WriteLine("Файл распознан.");
+            return speechText;
         }
     }
 }
